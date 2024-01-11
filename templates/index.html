@@ -2,19 +2,15 @@
 <html>  
     <head>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/styles.css') }}">
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- <link href='{{ font_url }}' rel='stylesheet'> -->
         <title>Uploading & Reading CSV file</title>  
     </head>  
     <body>  
-        <!-- <form enctype="multipart/form-data" action = "/">    
-            <input type="file" name="file" accept=".csv">
-            <input type = "submit" value="Upload">  
-        </form>
-        <p style="color:blue;">Choose csv file to upload</p>
-        <form action="/show_data" target="_blank">
-            <input type="submit" value="Show CSV"/>
-        </form> -->
-
         <div class="upload-wrap">
             <div class="create-card">
                 <div class="top-card">
@@ -35,7 +31,7 @@
                 </div>
             
                 <div class="bottom-card">
-                    <div class="content">
+                    <form class="content" method="post" enctype="multipart/form-data">
                         <div class="text">Import a csv file with the invoices to be classified. <br/>Download a sample <a href="{{ url_for('static', filename='docs/bulk-upload-template.csv') }}" target="_blank">template here</a>.</div>
             
                         <div class="actions">
@@ -43,19 +39,21 @@
                                 <div class="upload-btn">
                                     <input 
                                         type="file" 
+                                        name="csv_file"
                                         class="file-upload"
-                                        #fileUpload
                                     />
                                     <div class="upload-text"> <span>&#8683;</span> Upload csv file </div>
                                     <!-- <span class="file-name">bulk-upload.pdf</span> -->
                                 </div>
                                 <div class="action-btn">
-                                    <div class="cta primary" style="min-width: 30%" type="submit">Submit File</div>
+                                    <div class="cta primary" style="min-width: 30%">
+                                        <input type=submit value="Submit File">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                 
-                    </div>
+                    </form>
             
                 </div>
             </div>

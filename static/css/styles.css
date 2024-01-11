@@ -19,6 +19,7 @@ body {
 
 .create-card {
     width: 35%;
+    min-width: 25rem;
     height: auto;
     overflow: hidden;
     border-radius: 0.4rem;
@@ -133,9 +134,10 @@ body {
     cursor: pointer;
 }
 .create-card .bottom-card .content .actions .file-upload {
+    color: white;
     cursor: pointer;
     position: absolute;
-    opacity: 0;
+    opacity: 1;
     left: 0;
     top: 0;
     z-index: 3;
@@ -148,11 +150,13 @@ body {
     z-index: 1;
 }
 .create-card .bottom-card .content .actions .upload-text {
+    opacity: 0;
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.8);
     letter-spacing: 0.04rem;
 }
 .create-card .bottom-card .content .actions .upload-text span {
+    opacity: 0;
     font-size: 1.2rem;
     padding: 0.1rem 0.3rem;
     background-color: rgba(66, 133, 244, 1);
@@ -173,11 +177,20 @@ body {
     border-radius: 0.3rem;
     justify-content: flex-end;
     background-color: rgba(66, 133, 244, 1);
-    text-transform: uppercase;
     cursor: pointer;
     color: white;
     text-align: center;
-    padding: 0.5rem;
+    padding: 0.45rem;
+}
+.create-card .bottom-card .content .actions .action-btn .cta input {
+    color: white;
+    font-size: 0.8rem;
+    letter-spacing: 0.04rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: transparent;
 }
 
 /*
