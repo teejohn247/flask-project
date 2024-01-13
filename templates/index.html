@@ -11,6 +11,25 @@
         <title>Uploading & Reading CSV file</title>  
     </head>  
     <body>  
+        <table>
+            <thead>
+                <tr>
+                    {% for col in colnames %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    {% for col in colnames %}
+                    <td>{{ record[col] }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
         <div class="upload-wrap">
             <div class="create-card">
                 <div class="top-card">
@@ -32,7 +51,7 @@
             
                 <div class="bottom-card">
                     <form class="content" method="post" enctype="multipart/form-data">
-                        <div class="text">Import a csv file with the invoices to be classified. <br/>Download a sample <a href="{{ url_for('static', filename='docs/bulk-upload-template.csv') }}" target="_blank">template here</a>.</div>
+                        <div class="text">Import a csv file with the invoices to be classified. <br/>Download a sample <a href="{{ url_for('static', filename='docs/rsk_invoice.csv') }}" target="_blank">template here</a>.</div>
             
                         <div class="actions">
                             <div class="btn-hld">
