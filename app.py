@@ -71,7 +71,7 @@ def index():
 
         df['Category'].replace([0, 1, 2], ['Hire Supplier', 'Material Supplier', 'Subcontractor'], inplace=True)
 
-        df_combined = pd.concat([df_Internal, df], ignore_index=False, sort=False)
+        df_combined = pd.concat([df, df_Internal], ignore_index=True, sort=True)
 
         # category_sum = df_combined.groupby('Category').sum()['Cost']
         category_agg = df_combined.groupby('Category')['Cost'].agg(['sum','count'])
@@ -88,7 +88,7 @@ def index():
 
         #Pagination
         page = request.args.get('page', 1, type='int')
-        per_page = 10
+        per_page = 100
         start = (page - 1) * per_page
         end = start + per_page
         total_pages = (len(tableData) + per_page - 1) // per_page
