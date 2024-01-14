@@ -88,7 +88,7 @@
             </tbody>
         </table>
 
-        <div class="pagination-wrap">
+        <!-- <div class="pagination-wrap">
             {% if current_page and current_page > 1 %}
                 <a href="{{ url_for('index', current_page=current_page-1) }}">Previous</a>
             {% endif %}
@@ -98,7 +98,7 @@
             {% if current_page and current_page < pages_count %}
                 <a href="{{ url_for('index', current_page=current_page+1) }}">Next</a>
             {% endif %}
-        </div>
+        </div> -->
 
         {% if categories %}
             <a href="{{ url_for('static', filename='docs/classified_invoice.csv') }}" target="_blank">Download CSV</a>
