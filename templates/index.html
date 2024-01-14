@@ -3,6 +3,8 @@
     <head>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/styles.css') }}">
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
         <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"> -->
@@ -10,7 +12,63 @@
         <!-- <link href='{{ font_url }}' rel='stylesheet'> -->
         <title>Uploading & Reading CSV file</title>  
     </head>  
-    <body>  
+    <body>
+        {% if categories %}
+            <div class="chart"><canvas id="myChart" width="600" height="400"></canvas></div>
+            <script>
+                // Global parameters:
+                // do not resize the chart canvas when its container does (keep at 600x400px)
+                Chart.defaults.global.responsive = false;
+        
+                // define the chart data
+                var chartData = {
+                    labels: {{categories | safe}},
+                    datasets: [
+                        {
+                            data: {{cost_sum | safe}},
+                            // backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef'],
+                        }
+                    ]
+                }
+        
+                // get chart canvas
+                var ctx = document.getElementById("myChart").getContext("2d");
+        
+                var options = {
+                    tooltips: {
+                        enabled: false
+                    },
+                    plugins: {
+                        labels: [
+                            {
+                                render: 'label',
+                                position: 'outside',
+                                fontColor: '#000',
+                                fontSize: 15
+                            },
+                            {
+                                render: 'percentage',
+                                fontColor: '#000',
+                                fontSize: 14,
+                                position: 'border',
+                            }
+                        ]
+                    }
+                };
+        
+                // create the chart using the chart canvas
+                var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: chartData,
+                    options: options
+                });
+        
+            </script>
+        {% endif %}
+
+        
+
         <table>
             <thead>
                 <tr>
@@ -29,6 +87,19 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <div class="pagination-wrap">
+            {% if current_page and current_page > 1 %}
+                <a href="{{ url_for('index', current_page=current_page-1) }}">Previous</a>
+            {% endif %}
+            {% if current_page %}
+                <span>Page {{current_page}} of {{pages_count}}</span>
+            {% endif %}
+            {% if current_page and current_page < pages_count %}
+                <a href="{{ url_for('index', current_page=current_page+1) }}">Next</a>
+            {% endif %}
+        </div>
+        
 
         <div class="upload-wrap">
             <div class="create-card">
