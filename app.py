@@ -5,7 +5,7 @@ import os
 import csv
 import sys
 import json
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, make_response, render_template, url_for, Response
 import numpy as np
 import pandas as pd
 from werkzeug.utils import secure_filename
@@ -39,12 +39,13 @@ model = pickle.load(open('models/model.pkl', 'rb'))
 
 # Define a route for the root URL
 @app.route('/', methods=['GET','POST'])
-def index():
+def index():    
     if request.method == 'POST':
         uploaded_file = request.files['csv_file']
         print(uploaded_file, file=sys.stderr)
         
         filename = secure_filename(uploaded_file.filename)
+        print(filename, file=sys.stderr)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         uploaded_file.save(file_path)
 
@@ -72,8 +73,13 @@ def index():
         df['Category'].replace([0, 1, 2], ['Hire Supplier', 'Material Supplier', 'Subcontractor'], inplace=True)
 
         df_combined = pd.concat([df, df_Internal], ignore_index=True, sort=True)
+        new_df = df_combined.copy()
 
-        # category_sum = df_combined.groupby('Category').sum()['Cost']
+        new_df.to_csv('static/docs/classified_invoice.csv', index=False)
+        
+        # with open("classified_invoice.csv", "w") as csv_file:
+        #     csv_file.write(f'{new_file}')
+
         category_agg = df_combined.groupby('Category')['Cost'].agg(['sum','count'])
 
         category_costs = category_agg["sum"].values.tolist()
@@ -95,10 +101,10 @@ def index():
         data_per_page = tableData[start:end] 
 
         # print(tableData[0], file=sys.stderr)
-
         category_names = ['Internal Supplier', 'Hire Supplier', 'Material Supplier', 'Subcontractor']
 
         columnNames = ['Unit', 'Nominal Code', 'Ledger', 'Type', 'Value', 'Ref', 'Description', 'Cost', 'Supplier ID', 'Category']
+
         return render_template(
             'index.html', 
             colnames=columnNames, 
@@ -107,16 +113,10 @@ def index():
             current_page=page,
             categories = category_names,
             cost_sum = category_costs, 
-            category_counts = category_counts
+            category_counts = category_counts,
         )
+    
     return render_template('index.html')
-
-# def upload():
-#     if request.method == 'POST':
-#         df = pd.read_csv(request.files.get('file'))
-#         print(df, file=sys.stderr)
-#         return render_template('index.html')
-#     return render_template('index.html')
     
 
 # Run the app if this script is executed directly
