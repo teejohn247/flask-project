@@ -12,34 +12,193 @@
         <!-- <link href='{{ font_url }}' rel='stylesheet'> -->
         <title>Uploading & Reading CSV file</title>  
     </head>  
-    <body>        
-
-        <table>
-            <thead>
-                <tr>
-                    {% for col in colnames %}
-                    <th>{{ col }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in records %}
-                <tr>
-                    {% for col in colnames %}
-                    <td>{{ record[col] }}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-
+    <body>
         {% if categories %}
-            <a href="{{ url_for('static', filename='docs/classified_invoice.csv') }}" target="_blank">Download CSV</a>
+
+            <div class="page-wrap">
+
+                <div class="page-title">Invoice Classification</div>
+
+                <div class="dashboard">
+
+                    <div class="category-cards">
+
+                        <div class="card-hld">
+                            <div class="cont">
+                                <div class="det">
+                                    <div class="title">Hire Supplier</div>
+                                    <div class="cost">
+                                        <span>{{ "£ {:,.2f}".format(cost_sum[0]) }}</span>
+                                    </div>
+                                </div>
+                                <div class="det">
+                                    <div class="count"><span>{{"{:,.0f}".format(category_counts[0])}}</span> Suppliers</div>
+                                    <div class="icon">
+                                        <img src="{{ url_for('static', filename='img/hire.png') }}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-hld">
+                            <div class="cont">
+                                <div class="det">
+                                    <div class="title">Internal Suppliers</div>
+                                    <div class="cost">
+                                        <span>{{ "£ {:,.2f}".format(cost_sum[1]) }}</span>
+                                    </div>
+                                </div>
+                                <div class="det">
+                                    <div class="count"><span>{{"{:,.0f}".format(category_counts[1])}}</span> Suppliers</div>
+                                    <div class="icon">
+                                        <img src="{{ url_for('static', filename='img/internal.png') }}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-hld">
+                            <div class="cont">
+                                <div class="det">
+                                    <div class="title">Material Suppliers</div>
+                                    <div class="cost">
+                                        <span>{{ "£ {:,.2f}".format(cost_sum[2]) }}</span>
+                                    </div>
+                                </div>
+                                <div class="det">
+                                    <div class="count"><span>{{"{:,.0f}".format(category_counts[2])}}</span> Suppliers</div>
+                                    <div class="icon">
+                                        <img src="{{ url_for('static', filename='img/material.png') }}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-hld">
+                            <div class="cont">
+                                <div class="det">
+                                    <div class="title">Subcontractors</div>
+                                    <div class="cost">
+                                        <span> {{ "£ {:,.2f}".format(cost_sum[3]) }}</span>
+                                    </div>
+                                </div>
+                                <div class="det">
+                                    <div class="count"><span>{{"{:,.0f}".format(category_counts[3])}}</span> Suppliers</div>
+                                    <div class="icon">
+                                        <img src="{{ url_for('static', filename='img/subcontractor.png') }}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="chart">
+                        <canvas id="myChart" width="600" height="400"></canvas>
+                    </div>
+                    <script>
+                        // Global parameters:
+                        // do not resize the chart canvas when its container does (keep at 600x400px)
+                        Chart.defaults.global.responsive = false;
+                
+                        // define the chart data
+                        var chartData = {
+                            labels: {{categories | safe}},
+                            datasets: [
+                                {
+                                    data: {{cost_sum | safe}},
+                                    // backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                                    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef'],
+                                }
+                            ]
+                        }
+                
+                        // get chart canvas
+                        var ctx = document.getElementById("myChart").getContext("2d");
+                
+                        var options = {
+                            tooltips: {
+                                enabled: true
+                            },
+                            plugins: {
+                                labels: [
+                                    {
+                                        render: 'label',
+                                        position: 'outside',
+                                        fontColor: '#000',
+                                        fontSize: 9
+                                    },
+                                    {
+                                        render: 'percentage',
+                                        fontColor: '#000',
+                                        fontSize: 14,
+                                        position: 'border',
+                                    }
+                                ],
+                                title: {
+                                    display: true,
+                                    text: "Category Cost Sum Chart"
+                                },
+                            }
+                        };
+                
+                        // create the chart using the chart canvas
+                        var myChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: chartData,
+                            options: options
+                        });
+                
+                    </script>
+                </div>
+
+
+                <div class="table-wrap">
+                    <a class="download-btn" href="{{ url_for('static', filename='docs/classified_invoice.csv') }}" target="_blank"><span>&#10515;</span> Download CSV</a>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                {% for col in colnames %}
+                                <th>{{ col }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                {% for col in colnames %}
+
+                                    {% if col == 'Description' %}
+                                        <td>{{ record[col] | truncate(80) }}</td>
+                                        {% else %}
+                                        <td>{{ record[col] }}</td>
+                                    {% endif %}
+                                
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            
+                    <div class="pagination-wrap">
+                        {% if current_page and current_page > 1 %}
+                            <a href="{{ url_for('index', current_page=current_page-1) }}">Previous</a>
+                        {% endif %}
+                        {% if current_page %}
+                            <span>Page {{current_page}} of {{pages_count}}</span>
+                        {% endif %}
+                        {% if current_page and current_page < pages_count %}
+                            <a href="{{ url_for('index', current_page=current_page+1) }}">Next</a>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
         {% endif %}
         
 
-        <div class="upload-wrap" style="visibility: visible;">
+        <div class="upload-wrap" style="visibility: {{display_style}};">
             <div class="create-card">
                 <div class="top-card">
                     <div class="inner-wrap">

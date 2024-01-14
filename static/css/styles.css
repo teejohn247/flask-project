@@ -2,6 +2,200 @@ body {
    font-family: Arial, Helvetica, sans-serif;
 }
 
+/* PAGE STYLING */
+
+.page-wrap {
+    padding: 2rem 4%;
+}
+
+.page-wrap .page-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.02rem;
+    text-transform: uppercase;
+}
+
+.dashboard {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    gap: 1rem;
+}
+
+.dashboard .chart {
+    display: flex;
+    padding: 1rem 0.7rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.4rem;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard .category-cards {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.dashboard .category-cards .card-hld {
+    width: 48%;
+    position: relative;
+    margin-bottom: 0.3rem;
+    display: inline-block;
+    border-radius: 0.3rem;
+    background-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard .category-cards .card-hld:nth-child(n+3) {
+    margin-top: 1.7rem;
+}
+
+.dashboard .category-cards .card-hld .cont {
+    padding: 0.8rem 6%;
+    border-radius: 0.3rem;
+    border: 1px solid white;
+}
+
+
+.dashboard .category-cards .card-hld .cont .det {
+    position: relative;
+}
+
+.dashboard .category-cards .card-hld .cont .det .title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.03rem;
+    color: #424242;
+}
+
+.dashboard .category-cards .card-hld .cont .det .cost {
+    margin-top: 0.2rem;
+    color: #36ab68;
+}
+
+.dashboard .category-cards .card-hld .cont .det .cost span {
+    font-size: 0.7rem;
+    letter-spacing: 0.03rem;
+}
+
+.dashboard .category-cards .card-hld .cont .det .count {
+    font-size: 0.7rem;
+    letter-spacing: 0.03rem;
+}
+
+.dashboard .category-cards .card-hld .cont .det .count span {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.5);
+    margin-right: 0.4rem;
+}
+
+.dashboard .category-cards .card-hld .cont .det .icon {
+    width: 25%;
+    font-size: 1.8rem;
+    text-align: right;
+}
+
+.dashboard .category-cards .card-hld .cont .det .icon img {
+    width: 100%;
+    height: auto;
+}
+
+.dashboard .category-cards .card-hld .cont .det:last-child {
+    display: flex;
+    margin-top: 0rem;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.table-wrap .download-btn {
+    font-size: 1.1rem;
+    letter-spacing: 0.03rem;
+    color: white;
+    padding: 0.6rem 1.3rem;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    background-color: rgba(66, 133, 244, 1);
+    position: relative;
+    top: -1.8rem;
+}
+
+.table-wrap .download-btn span {
+    font-size: 1rem;
+}
+
+.table-wrap table {
+    margin-top: 3rem;
+}
+
+table {
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+table thead {
+
+}
+
+table thead tr {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    background: rgba(66, 133, 244, 0.25);
+}
+
+table thead tr:first-child {
+    border-top-left-radius: 0.4rem;
+}
+
+table thead tr:last-child {
+    border-top-right-radius: 0.4rem;
+}
+
+table thead tr th {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+}
+
+table thead tr th:nth-child(1),
+table thead tr th:nth-child(3),
+table thead tr th:nth-child(5) {
+    width: 10%;
+}
+
+table thead tr th:nth-child(2),
+table thead tr th:nth-child(6),
+table thead tr th:nth-child(7) {
+    width: 12%;
+}
+
+table thead tr th:nth-child(4) {
+    width: 30%;
+}
+
+table tbody {
+
+}
+
+table tbody tr {
+    padding: 0.7rem 0.5rem;
+}
+
+table tbody tr:nth-child(n+2) {
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+table tbody tr td {
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+table tbody tr td:nth-child(4) {
+    text-align: left;
+}
+
 /* UPLOAD MODAL STYLING*/
 
 .upload-wrap {

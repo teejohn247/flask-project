@@ -41,7 +41,7 @@ def index():
         #Drop all the Null/Misiing Values.
         df.dropna(inplace=True)
 
-        df['Cost'] = np.random.randint(0,10000, size=len(df))
+        # df['Cost'] = np.random.randint(0,10000, size=len(df))
 
         df_Internal = df[(df['Supplier ID'] == 'RSK')]
         df_Internal['Category'] = 'Internal Supplier'
@@ -68,7 +68,7 @@ def index():
         # with open("classified_invoice.csv", "w") as csv_file:
         #     csv_file.write(f'{new_file}')
 
-        category_agg = df_combined.groupby('Category')['Cost'].agg(['sum','count'])
+        category_agg = df_combined.groupby('Category')['Value'].agg(['sum','count'])
 
         category_costs = category_agg["sum"].values.tolist()
         category_counts = category_agg["count"].values.tolist()
@@ -89,9 +89,9 @@ def index():
         data_per_page = tableData[start:end] 
 
         # print(tableData[0], file=sys.stderr)
-        category_names = ['Internal Supplier', 'Hire Supplier', 'Material Supplier', 'Subcontractor']
+        category_names = ['Hire Supplier', 'Internal Supplier', 'Material Supplier', 'Subcontractor']
 
-        columnNames = ['Unit', 'Nominal Code', 'Ledger', 'Type', 'Value', 'Ref', 'Description', 'Cost', 'Supplier ID', 'Category']
+        columnNames = ['Unit', 'Nominal Code', 'Ref', 'Description', 'Value', 'Supplier ID', 'Category']
 
         return render_template(
             'index.html', 
