@@ -5,24 +5,12 @@ import os
 import csv
 import sys
 import json
-from flask import Flask, request, make_response, render_template, url_for, Response
+from flask import Flask, request, render_template, url_for
 import numpy as np
 import pandas as pd
 from werkzeug.utils import secure_filename
 from io import StringIO
-
 import pickle
-import sklearn
-
-# import nltk
-
-# nltk.download('stopwords')
-# nltk.download('wordnet')
-# nltk.download('punkt')
-
-# from nltk.tokenize import word_tokenize
-# from nltk.corpus import stopwords
-# from nltk.stem import WordNetLemmatizer
 
 
 
