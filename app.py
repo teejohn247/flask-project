@@ -102,9 +102,10 @@ def index():
             categories = category_names,
             cost_sum = category_costs, 
             category_counts = category_counts,
+            display_style = 'hidden'
         )
     
-    return render_template('index.html')
+    return render_template('index.html', display_style = 'visible')
     
 
 # Run the app if this script is executed directly
